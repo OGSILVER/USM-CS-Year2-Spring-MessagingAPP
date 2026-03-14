@@ -1,4 +1,4 @@
-package dev.skirtty.webmessaging;
+package dev.skirtty.webmessaging.controllers;
 
 public class UserSettingsController {
     
