@@ -1,43 +1,38 @@
 package dev.skirtty.webmessaging.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "messages")
+@Getter @Setter @NoArgsConstructor
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
     private String content;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private LocalDateTime sent_at;
 
-    // In a real app, 'sender' would be a relationship to your User entity
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User sender;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = false)
+    private Chats chat_id;
 
-    // Default constructor for JPA
-    public Message() {
-        this.timestamp = LocalDateTime.now();
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", nullable = false)
+    private Users sender;
 
-    public Message(String content, User sender) {
+
+    public Message(String content, Users sender) {
         this.content = content;
         this.sender = sender;
         this.timestamp = LocalDateTime.now();
     }
-
-    // Getters and Setters...
-    public Long getId() { return id; }
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public User getSender() { return sender; }
-    public void setSender(User sender) { this.sender = sender; }
-}
