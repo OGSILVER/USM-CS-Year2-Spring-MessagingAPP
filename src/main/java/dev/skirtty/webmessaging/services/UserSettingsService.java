@@ -18,7 +18,7 @@ public class UserSettingsService {
     private final UserSettingsRepository userSettingsRepository;
 
     public UserSettings getByUserId(Long userId) {
-        return userSettingsRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("User settings not found for user id: " + userId));
+        return userSettingsRepository.findById(userId).orElseThrow(() -> new RuntimeException("User settings not found for user id: " + userId));
     }
 
     public UserSettings update(Long userId, UserSettingsDTO userSettings) {

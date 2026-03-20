@@ -13,26 +13,31 @@ import java.time.LocalDateTime;
 public class Message {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime sent_at;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = false)
-    private Chats chat_id;
+    @ManyToOne
+    @JoinColumn(name = "chat_id", nullable = false)
+    private Chats chat;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "sender_id", nullable = false)
     private Users sender;
 
+    @PrePersist
+    protected void onCreate() {
+        this.sent_at = LocalDateTime.now();
+    }
 
-    public Message(String content, Users sender) {
+    public Message(String content, Users sender, Chats chat) {
         this.content = content;
         this.sender = sender;
-        this.timestamp = LocalDateTime.now();
+        this.chat = chat;
     }
+}
