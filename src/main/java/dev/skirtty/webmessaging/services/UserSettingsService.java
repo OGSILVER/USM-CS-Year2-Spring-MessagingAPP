@@ -21,15 +21,6 @@ public class UserSettingsService {
         return userSettingsRepository.findById(userId).orElseThrow(() -> new RuntimeException("User settings not found for user id: " + userId));
     }
 
-    public UserSettings update(Long userId, UserSettingsDTO userSettings) {
-        UserSettings settings = getByUserId(userId);
-        settings.setTheme(userSettings.getTheme());
-        settings.setAccent_color(userSettings.getAccent_color());
-        settings.setLanguage(userSettings.getLanguage());
-        settings.setNotifications_enabled(userSettings.isNotifications_enabled());
-        return userSettingsRepository.save(settings);
-    }
-
     public UserSettings patch(Long userId, Map<String, Object> updates) {
         UserSettings settings = getByUserId(userId);
         updates.forEach((key, value) -> {
