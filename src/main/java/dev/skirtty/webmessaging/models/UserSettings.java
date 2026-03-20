@@ -16,7 +16,7 @@ public class UserSettings {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private Users user_id;
 
     @Column(length = 20)

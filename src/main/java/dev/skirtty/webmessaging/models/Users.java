@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Users {
     @GeneratedValue
     @Id
-    private int user_id;
+    private long user_id;
 
     @Column(length = 50, nullable = false, unique = true)
     private String username;
@@ -28,7 +28,7 @@ public class Users {
     private String password;
 
     @Column
-    private boolean is_online = false;
+    private boolean isOnline;
 
     @LastModifiedDate
     private LocalDateTime last_seen;
