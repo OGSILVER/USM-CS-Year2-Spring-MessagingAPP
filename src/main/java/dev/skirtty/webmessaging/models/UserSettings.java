@@ -17,7 +17,7 @@ public class UserSettings {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private Users user_id;
+    private Users user;
 
     @Column(length = 20)
     private String theme;

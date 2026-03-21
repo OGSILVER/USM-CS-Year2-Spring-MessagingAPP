@@ -18,13 +18,10 @@ public class UserController {
 
     private final UserService userService;
 
-
     @PostMapping("/register-user")
     public ResponseEntity<Long> register(@Valid @RequestBody RegisterRequest request) {
-        Long registeredUser = userService.registerUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(request));
     }
-
 
     // this is wrong @reminder to make a request dto for updating user fields and add logic for password modify
     // uncomplete, just for showcase
@@ -37,4 +34,5 @@ public class UserController {
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
+
 }

@@ -22,7 +22,7 @@ public class AppConfigController {
         return appConfigService.addAppConfig(appName, version,description);
     }
 
-    @GetMapping("/get/{id}/")
+    @GetMapping("/{id}")
     public AppConfig getConfig (@PathVariable Long id) {
         return appConfigService.getAppDetailsById(id);
     }

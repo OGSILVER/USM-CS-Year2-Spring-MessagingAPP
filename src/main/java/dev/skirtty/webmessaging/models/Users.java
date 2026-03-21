@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 public class Users {
     @GeneratedValue
     @Id
-    private long user_id;
+    private Long user_id;
 
     @Column(length = 50, nullable = false, unique = true)
     private String username;
@@ -30,11 +32,11 @@ public class Users {
     @Column
     private boolean isOnline;
 
-    @LastModifiedDate
+    @UpdateTimestamp
     private LocalDateTime last_seen;
 
-    @CreatedDate
     @Column(updatable = false)
+    @CreationTimestamp
     private LocalDateTime created_at;
 
 

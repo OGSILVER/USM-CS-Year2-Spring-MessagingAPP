@@ -16,13 +16,11 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public Long registerUser(RegisterRequest request) {
-
         Users newUser = new Users();
         newUser.setUsername(request.getUsername());
         newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         return userRepository.save(newUser).getUser_id();
-
     }
 
     public UserResponse updateUser(Long id, Users user) {

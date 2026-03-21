@@ -18,7 +18,8 @@ public class UserSettingsService {
     private final UserSettingsRepository userSettingsRepository;
 
     public UserSettings getByUserId(Long userId) {
-        return userSettingsRepository.findById(userId).orElseThrow(() -> new RuntimeException("User settings not found for user id: " + userId));
+        return userSettingsRepository.findByUserId(userId)  // ✅ direct Long, fără findById
+                .orElseThrow(() -> new RuntimeException("User settings not found"));
     }
 
     public UserSettings update(Long userId, UserSettingsDTO userSettings) {
@@ -32,14 +33,18 @@ public class UserSettingsService {
 
     public UserSettings patch(Long userId, Map<String, Object> updates) {
         UserSettings settings = getByUserId(userId);
-        updates.forEach((key, value) -> {
-            switch (key) {
-                case "theme" -> settings.setTheme((String) value);
-                case "accent_color" -> settings.setAccent_color((String) value);
-                case "language" -> settings.setLanguage((String) value);
-                case "notifications_enabled" -> settings.setNotifications_enabled((Boolean) value);
-            }
-        });
+        if (updates.containsKey("theme") && updates.get("theme") != null) {
+            settings.setTheme((String) updates.get("theme"));
+        }
+        if (updates.containsKey("accent_color") && updates.get("accent_color") != null) {
+            settings.setTheme((String) updates.get("accent_color"));
+        }
+        if (updates.containsKey("language") && updates.get("language") != null) {
+            settings.setTheme((String) updates.get("language"));
+        }
+        if (updates.containsKey("notifications_enabled") && updates.get("notifications_enabled") != null) {
+            settings.setTheme((String) updates.get("notifications_enabled"));
+        }
         return userSettingsRepository.save(settings);
     }
 
@@ -48,7 +53,7 @@ public class UserSettingsService {
                 .orElseThrow(() -> new RuntimeException("User not found: " + userId));
 
         UserSettings settings = new UserSettings();
-        settings.setUser_id(user);
+        settings.setUser(user);
         settings.setTheme("light");
         settings.setAccent_color("blue");
         settings.setLanguage("en");
