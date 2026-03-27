@@ -24,11 +24,6 @@ public class UserSettingsController {
         return ResponseEntity.ok(userSettingsService.getByUserId(userId));
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<UserSettings> updateSettings(@PathVariable Long userId, @RequestBody UserSettingsDTO request) {
-        return ResponseEntity.ok(userSettingsService.update(userId, request));
-    }
-
     @PatchMapping("/{userId}")
     public ResponseEntity<UserSettings> patchSettings(@PathVariable Long userId, @RequestBody Map<String, Object> updates) {
         return ResponseEntity.ok(userSettingsService.patch(userId, updates));
