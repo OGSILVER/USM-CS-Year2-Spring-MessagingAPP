@@ -34,10 +34,4 @@ public class Message {
     protected void onCreate() {
         this.sent_at = LocalDateTime.now();
     }
-
-    public Message(String content, Users sender, Chats chat) {
-        this.content = content;
-        this.sender = sender;
-        this.chat = chat;
-    }
 }
