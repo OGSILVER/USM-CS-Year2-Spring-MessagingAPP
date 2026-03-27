@@ -1,8 +1,11 @@
 package dev.skirtty.webmessaging.controllers;
 
+import dev.skirtty.webmessaging.dto.AppConfigDTO;
 import dev.skirtty.webmessaging.models.AppConfig;
 import dev.skirtty.webmessaging.services.AppConfigService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,12 +21,12 @@ public class AppConfigController {
     }
 
     @PostMapping("/create/")
-    public AppConfig createConfig (@RequestParam String appName, @RequestParam String version, @RequestParam String description) {
-        return appConfigService.addAppConfig(appName, version,description);
+    public ResponseEntity<AppConfigDTO> createConfig (@RequestBody AppConfigDTO appConfigDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(appConfigService.addAppConfig(appConfigDTO));
     }
 
     @GetMapping("/{id}")
-    public AppConfig getConfig (@PathVariable Long id) {
-        return appConfigService.getAppDetailsById(id);
+    public ResponseEntity<AppConfigDTO> getConfig (@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(appConfigService.getAppDetailsById(id));
     }
 }
