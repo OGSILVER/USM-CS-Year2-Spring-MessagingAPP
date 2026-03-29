@@ -14,13 +14,13 @@ import java.util.Optional;
 @Repository
 public interface ChatsMembersRepository extends JpaRepository<ChatsMembers, Long> {
 
-    List<ChatsMembers> findByChatId_Id(Long chatId);
+    List<ChatsMembers> findByChat_Id(Long chatId);
 
-    boolean existsByChatId_IdAndUserId_Id(Long chatId, Long userId);
+    boolean existsByChat_IdAndUser_Id(Long chatId, Long userId);
 
     @Modifying
     @Transactional
-    void deleteByChatId_IdAndUserId_Id(Long chatId, Long userId);
+    void deleteByChat_IdAndUser_Id(Long chatId, Long userId);
 
     @Query("""
         SELECT CASE WHEN COUNT(cm) > 0 THEN true ELSE false END

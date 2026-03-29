@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Chats {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chat_id;
+    private Long id;
 
     @Column(length = 100)
     private String name;

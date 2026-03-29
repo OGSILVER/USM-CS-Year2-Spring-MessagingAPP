@@ -20,7 +20,7 @@ public class UsersService {
         newUser.setUsername(request.getUsername());
         newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        return userRepository.save(newUser).getUser_id();
+        return userRepository.save(newUser).getId();
     }
 
     public UsersResponse updateUser(Long id, Users user) {
@@ -30,7 +30,7 @@ public class UsersService {
     public UsersResponse getUserById(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         UsersResponse usersResponse = new UsersResponse();
-        usersResponse.setId(user.getUser_id());
+        usersResponse.setId(user.getId());
         usersResponse.setUsername(user.getUsername());
         usersResponse.setEmail(user.getEmail());
         usersResponse.setOnline(user.isOnline());

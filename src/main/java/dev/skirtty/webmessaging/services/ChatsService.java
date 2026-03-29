@@ -34,16 +34,16 @@ public class ChatsService {
         chats.setPicture(chatsDTO.getPicture());
         chats.setType(chats.getType());
 
-        firstChatMember.setChatId(chats);
-        firstChatMember.setUserId(usersRepository.findById(chatsDTO.getFirstUserId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!")));
-        secondChatMember.setChatId(chats);
-        secondChatMember.setUserId(usersRepository.findById(chatsDTO.getSecondUserId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!")));
+        firstChatMember.setChat(chats);
+        firstChatMember.setUser(usersRepository.findById(chatsDTO.getFirstUserId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!")));
+        secondChatMember.setChat(chats);
+        secondChatMember.setUser(usersRepository.findById(chatsDTO.getSecondUserId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!")));
 
         chatsRepository.save(chats);
         chatsMembersRepository.save(firstChatMember);
         chatsMembersRepository.save(secondChatMember);
 
-        chatsDTO.setChatId(chats.getChat_id());
+        chatsDTO.setChatId(chats.getId());
         return chatsDTO;
     }
 
@@ -72,8 +72,8 @@ public class ChatsService {
         return messages.map(message -> {
             MessageDTO dto = new MessageDTO();
             dto.setContent(message.getContent());
-            dto.setSenderId(message.getSender().getUser_id());
-            dto.setChatId(message.getChat().getChat_id());
+            dto.setSenderId(message.getSender().getId());
+            dto.setChatId(message.getChat().getId());
             dto.setSentAt(message.getSent_at());
             return dto;
         });

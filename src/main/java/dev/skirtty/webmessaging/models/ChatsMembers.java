@@ -17,10 +17,10 @@ public class ChatsMembers {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(table = "chat_id", nullable = false)
-    private Chats chatId;
+    @JoinColumn(name = "chat_id", nullable = false)
+    private Chats chat;
 
     @ManyToOne
-    @JoinColumn(table = "user_id", nullable = false)
-    private Users userId;
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
 }

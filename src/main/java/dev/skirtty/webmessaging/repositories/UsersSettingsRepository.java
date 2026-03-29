@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface UsersSettingsRepository extends JpaRepository<UsersSettings, Long> {
-    @Query("SELECT s FROM UserSettings s WHERE s.user.user_id = :userId")
+    @Query("SELECT s FROM UsersSettings s WHERE s.user.id = :userId")
     Optional<UsersSettings> findByUserId(@Param("userId") Long userId);
 }
