@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ public class Message {
     private String content;
 
     @Column(nullable = false, updatable = false)
+    @CreationTimestamp
     private LocalDateTime sent_at;
 
     @ManyToOne
@@ -29,9 +31,4 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
     private Users sender;
-
-    @PrePersist
-    protected void onCreate() {
-        this.sent_at = LocalDateTime.now();
-    }
 }

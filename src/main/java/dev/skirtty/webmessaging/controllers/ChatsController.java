@@ -1,5 +1,5 @@
 package dev.skirtty.webmessaging.controllers;
 
-public class ChatController {
+public class ChatsController {
     
 }

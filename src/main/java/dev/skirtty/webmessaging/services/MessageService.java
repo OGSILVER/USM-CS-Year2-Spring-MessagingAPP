@@ -6,21 +6,18 @@ import dev.skirtty.webmessaging.models.Message;
 import dev.skirtty.webmessaging.models.Users;
 import dev.skirtty.webmessaging.repositories.ChatsRepository;
 import dev.skirtty.webmessaging.repositories.MessageRepository;
-import dev.skirtty.webmessaging.repositories.UserRepository;
-import lombok.Data;
+import dev.skirtty.webmessaging.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
 public class MessageService {
 
     private final MessageRepository messageRepository;
-    private  final UserRepository userRepository;
+    private  final UsersRepository userRepository;
     private  final ChatsRepository chatsRepository;
 
     public MessageDTO sendMessageByUser (MessageDTO messageDTO) {

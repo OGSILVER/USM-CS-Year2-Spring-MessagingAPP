@@ -1,18 +1,18 @@
 package dev.skirtty.webmessaging.services;
 
 import dev.skirtty.webmessaging.dto.RegisterRequest;
-import dev.skirtty.webmessaging.dto.UserResponse;
+import dev.skirtty.webmessaging.dto.UsersResponse;
 import dev.skirtty.webmessaging.models.Users;
-import dev.skirtty.webmessaging.repositories.UserRepository;
+import dev.skirtty.webmessaging.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UsersService {
 
-    private final UserRepository userRepository;
+    private final UsersRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Long registerUser(RegisterRequest request) {
@@ -23,20 +23,20 @@ public class UserService {
         return userRepository.save(newUser).getUser_id();
     }
 
-    public UserResponse updateUser(Long id, Users user) {
+    public UsersResponse updateUser(Long id, Users user) {
         return null;
     }
 
-    public UserResponse getUserById(Long id) {
+    public UsersResponse getUserById(Long id) {
         Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(user.getUser_id());
-        userResponse.setUsername(user.getUsername());
-        userResponse.setEmail(user.getEmail());
-        userResponse.setOnline(user.isOnline());
-        userResponse.setLast_seen(user.getLast_seen() != null);
-        userResponse.setCreated_at(user.getCreated_at());
+        UsersResponse usersResponse = new UsersResponse();
+        usersResponse.setId(user.getUser_id());
+        usersResponse.setUsername(user.getUsername());
+        usersResponse.setEmail(user.getEmail());
+        usersResponse.setOnline(user.isOnline());
+        usersResponse.setLast_seen(user.getLast_seen() != null);
+        usersResponse.setCreated_at(user.getCreated_at());
 
-        return userResponse;
+        return usersResponse;
     }
 }

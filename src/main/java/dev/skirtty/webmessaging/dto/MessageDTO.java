@@ -5,6 +5,7 @@ import dev.skirtty.webmessaging.models.Users;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -20,5 +21,7 @@ public class MessageDTO {
 
     @NotNull(message = "Nu are un chat!")
     private Long chatId;
+
+    private LocalDateTime sentAt;
 
 }

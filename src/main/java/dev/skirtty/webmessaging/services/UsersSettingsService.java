@@ -1,10 +1,9 @@
 package dev.skirtty.webmessaging.services;
 
-import dev.skirtty.webmessaging.dto.UserSettingsDTO;
-import dev.skirtty.webmessaging.models.UserSettings;
+import dev.skirtty.webmessaging.models.UsersSettings;
 import dev.skirtty.webmessaging.models.Users;
-import dev.skirtty.webmessaging.repositories.UserRepository;
-import dev.skirtty.webmessaging.repositories.UserSettingsRepository;
+import dev.skirtty.webmessaging.repositories.UsersRepository;
+import dev.skirtty.webmessaging.repositories.UsersSettingsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,18 +11,18 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class UserSettingsService {
+public class UsersSettingsService {
 
-    private final UserRepository userRepository;
-    private final UserSettingsRepository userSettingsRepository;
+    private final UsersRepository userRepository;
+    private final UsersSettingsRepository userSettingsRepository;
 
-    public UserSettings getByUserId(Long userId) {
+    public UsersSettings getByUserId(Long userId) {
         return userSettingsRepository.findByUserId(userId)  // ✅ direct Long, fără findById
                 .orElseThrow(() -> new RuntimeException("User settings not found"));
     }
 
-    public UserSettings patch(Long userId, Map<String, Object> updates) {
-        UserSettings settings = getByUserId(userId);
+    public UsersSettings patch(Long userId, Map<String, Object> updates) {
+        UsersSettings settings = getByUserId(userId);
         if (updates.containsKey("theme") && updates.get("theme") != null) {
             settings.setTheme((String) updates.get("theme"));
         }
@@ -39,11 +38,11 @@ public class UserSettingsService {
         return userSettingsRepository.save(settings);
     }
 
-    public UserSettings createDefaults(Long userId) {
+    public UsersSettings createDefaults(Long userId) {
         Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found: " + userId));
 
-        UserSettings settings = new UserSettings();
+        UsersSettings settings = new UsersSettings();
         settings.setUser(user);
         settings.setTheme("light");
         settings.setAccent_color("blue");

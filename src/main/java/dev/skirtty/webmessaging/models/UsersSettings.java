@@ -9,7 +9,7 @@ import lombok.Setter;
 @Table(name = "user_settings")
 @Getter
 @Setter @NoArgsConstructor
-public class UserSettings {
+public class UsersSettings {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
