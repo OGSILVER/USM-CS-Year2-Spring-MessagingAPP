@@ -1,12 +1,15 @@
 package dev.skirtty.webmessaging.services;
 
 import dev.skirtty.webmessaging.dto.RegisterRequest;
-import dev.skirtty.webmessaging.dto.UsersResponse;
+import dev.skirtty.webmessaging.dto.UsersDTO;
+import dev.skirtty.webmessaging.dto.UsersUpdateDTO;
 import dev.skirtty.webmessaging.models.Users;
 import dev.skirtty.webmessaging.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,28 +18,34 @@ public class UsersService {
     private final UsersRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long registerUser(RegisterRequest request) {
+    public UsersDTO registerUser(RegisterRequest request) {
         Users newUser = new Users();
         newUser.setUsername(request.getUsername());
         newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
-        return userRepository.save(newUser).getId();
+
+        Users changedUser = userRepository.findById(userRepository.save(newUser).getId()).orElseThrow(() -> new RuntimeException(("User not found")));
+
+        return(new UsersDTO(newUser));
+
     }
 
-    public UsersResponse updateUser(Long id, Users user) {
-        return null;
+    public UsersDTO updateUsername(Long id, String username) {
+        Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Uer not found"));
+        user.setUsername(username);
+        return new UsersDTO(user);
+
     }
 
-    public UsersResponse getUserById(Long id) {
+    public UsersDTO updateEmail(Long id, UsersUpdateDTO newUser){
         Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        UsersResponse usersResponse = new UsersResponse();
-        usersResponse.setId(user.getId());
-        usersResponse.setUsername(user.getUsername());
-        usersResponse.setEmail(user.getEmail());
-        usersResponse.setOnline(user.isOnline());
-        usersResponse.setLast_seen(user.getLast_seen() != null);
-        usersResponse.setCreated_at(user.getCreated_at());
-
-        return usersResponse;
+        user.setEmail(newUser.getEmail());
+        return new UsersDTO(user);
     }
+
+    public UsersDTO getUserById(Long id) {
+        Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return new UsersDTO(user);
+    }
+
 }
