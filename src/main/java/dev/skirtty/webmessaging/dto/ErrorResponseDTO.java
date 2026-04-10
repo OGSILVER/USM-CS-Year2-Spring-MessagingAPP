@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @RequiredArgsConstructor
-public class ErrorResponse {
+public class ErrorResponseDTO {
 
     private int status;
     private String content;
@@ -16,7 +16,7 @@ public class ErrorResponse {
     @CreationTimestamp
     private LocalDateTime timestamp;
 
-    public ErrorResponse(int status, String content) {
+    public ErrorResponseDTO(int status, String content) {
         this.status = status;
         this.content = content;
     }

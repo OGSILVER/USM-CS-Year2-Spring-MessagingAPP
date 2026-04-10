@@ -27,7 +27,7 @@ public class AppConfigController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppConfigDTO> getConfig (@Valid @PathVariable Long id) {
+    public ResponseEntity<AppConfigDTO> getConfig (@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(appConfigService.getAppDetailsById(id));
     }
 }

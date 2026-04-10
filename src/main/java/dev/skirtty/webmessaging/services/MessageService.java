@@ -1,6 +1,7 @@
 package dev.skirtty.webmessaging.services;
 
 import dev.skirtty.webmessaging.dto.MessageDTO;
+import dev.skirtty.webmessaging.exceptions.ResourceNotFoundException;
 import dev.skirtty.webmessaging.models.Chats;
 import dev.skirtty.webmessaging.models.Message;
 import dev.skirtty.webmessaging.models.Users;
@@ -22,8 +23,8 @@ public class MessageService {
 
     public MessageDTO sendMessageByUser (MessageDTO messageDTO) {
         Message message = new Message();
-        Users sender = userRepository.findById(messageDTO.getSenderId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!"));
-        Chats chat = chatsRepository.findById(messageDTO.getChatId()).orElseThrow(() -> new RuntimeException("Nu exista asa id la chat!"));
+        Users sender = userRepository.findById(messageDTO.getSenderId()).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id!"));
+        Chats chat = chatsRepository.findById(messageDTO.getChatId()).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id la chat!"));
 
         message.setChat(chat);
         message.setSender(sender);

@@ -3,6 +3,7 @@ package dev.skirtty.webmessaging.services;
 import dev.skirtty.webmessaging.dto.RegisterRequest;
 import dev.skirtty.webmessaging.dto.UsersDTO;
 import dev.skirtty.webmessaging.dto.UsersUpdateDTO;
+import dev.skirtty.webmessaging.exceptions.ResourceNotFoundException;
 import dev.skirtty.webmessaging.models.Users;
 import dev.skirtty.webmessaging.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,27 +25,27 @@ public class UsersService {
         newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        Users changedUser = userRepository.findById(userRepository.save(newUser).getId()).orElseThrow(() -> new RuntimeException(("User not found")));
+        Users changedUser = userRepository.findById(userRepository.save(newUser).getId()).orElseThrow(() -> new ResourceNotFoundException(("User not found")));
 
         return(new UsersDTO(newUser));
 
     }
 
     public UsersDTO updateUsername(Long id, String username) {
-        Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Uer not found"));
+        Users user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setUsername(username);
         return new UsersDTO(user);
 
     }
 
     public UsersDTO updateEmail(Long id, UsersUpdateDTO newUser){
-        Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Users user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setEmail(newUser.getEmail());
         return new UsersDTO(user);
     }
 
     public UsersDTO getUserById(Long id) {
-        Users user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        Users user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return new UsersDTO(user);
     }
 

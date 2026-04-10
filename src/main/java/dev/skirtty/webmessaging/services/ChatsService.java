@@ -2,6 +2,8 @@ package dev.skirtty.webmessaging.services;
 
 import dev.skirtty.webmessaging.dto.ChatsDTO;
 import dev.skirtty.webmessaging.dto.MessageDTO;
+import dev.skirtty.webmessaging.dto.MessageRequestDTO;
+import dev.skirtty.webmessaging.exceptions.ResourceNotFoundException;
 import dev.skirtty.webmessaging.models.Chats;
 import dev.skirtty.webmessaging.models.ChatsMembers;
 import dev.skirtty.webmessaging.models.Message;
@@ -59,14 +61,15 @@ public class ChatsService {
         }
     }
 
-    public ChatsDTO deleteConversation (ChatsDTO chatsDTO) {
-        chatsRepository.deleteById(chatsDTO.getChatId());
-        return chatsDTO;
+    public Long deleteConversation (Long id) {
+        Chats chats = chatsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id de chat!"));
+        chatsRepository.deleteById(id);
+        return id;
     }
 
-    public Page<MessageDTO> getChatMessages (Long chatId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Message> messages = chatsRepository.findMessagesByChatId(chatId, pageable);
+    public Page<MessageDTO> getChatMessages (MessageRequestDTO messageRequestDTO) {
+        Pageable pageable = PageRequest.of(messageRequestDTO.getPage(), messageRequestDTO.getSize());
+        Page<Message> messages = chatsRepository.findMessagesByChatId(messageRequestDTO.getChat_id(), pageable);
 
         // Convertesti fiecare Message -> MessageDTO
         return messages.map(message -> {

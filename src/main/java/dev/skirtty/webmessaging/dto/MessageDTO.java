@@ -5,12 +5,15 @@ import dev.skirtty.webmessaging.models.Users;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class MessageDTO {
 
     @NotBlank(message = "Nu ai pus conetent la mesaj!")
