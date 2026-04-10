@@ -1,6 +1,6 @@
 package dev.skirtty.webmessaging.controllers;
 
-import dev.skirtty.webmessaging.dto.UsersResponse;
+import dev.skirtty.webmessaging.dto.UsersDTO;
 import dev.skirtty.webmessaging.services.ChatsMembersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ public class ChatsMembersController {
     private final ChatsMembersService chatsMembersService;
 
     @GetMapping
-    public ResponseEntity<List<UsersResponse>> getChatMembers(@PathVariable Long chatId) {
+    public ResponseEntity<List<UsersDTO>> getChatMembers(@PathVariable Long chatId) {
         return ResponseEntity.ok(chatsMembersService.getMembersByChatId(chatId));
     }
 

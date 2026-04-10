@@ -2,7 +2,8 @@ package dev.skirtty.webmessaging.controllers;
 
 
 import dev.skirtty.webmessaging.dto.RegisterRequest;
-import dev.skirtty.webmessaging.dto.UsersResponse;
+import dev.skirtty.webmessaging.dto.UsersDTO;
+import dev.skirtty.webmessaging.dto.UsersUpdateDTO;
 import dev.skirtty.webmessaging.models.Users;
 import dev.skirtty.webmessaging.services.UsersService;
 import jakarta.validation.Valid;
@@ -19,20 +20,23 @@ public class UsersController {
     private final UsersService userService;
 
     @PostMapping("/register-user")
-    public ResponseEntity<Long> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<UsersDTO> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(request));
     }
 
     // this is wrong @reminder to make a request dto for updating user fields and add logic for password modify
     // uncomplete, just for showcase
-    @PutMapping("/{id}")
-    public ResponseEntity<UsersResponse> update(@Valid @RequestBody Users user, @PathVariable Long id) {
-        return ResponseEntity.ok(userService.updateUser(id, user));
+    @PatchMapping("/update-username/{id}")
+    public ResponseEntity<UsersDTO> update(@Valid @RequestBody UsersUpdateDTO user, @PathVariable Long id) {
+        return ResponseEntity.ok(userService.updateUsername(id, user.getUsername()));
     }
 
+    @PatchMapping("/update-email/{id}")
+
     @GetMapping("/{id}")
-    public ResponseEntity<UsersResponse> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UsersDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
+
 
 }
