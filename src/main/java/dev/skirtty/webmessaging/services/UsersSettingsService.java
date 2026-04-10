@@ -1,5 +1,6 @@
 package dev.skirtty.webmessaging.services;
 
+import dev.skirtty.webmessaging.dto.UsersSettingsDTO;
 import dev.skirtty.webmessaging.models.UsersSettings;
 import dev.skirtty.webmessaging.models.Users;
 import dev.skirtty.webmessaging.repositories.UsersRepository;
@@ -17,23 +18,23 @@ public class UsersSettingsService {
     private final UsersSettingsRepository userSettingsRepository;
 
     public UsersSettings getByUserId(Long userId) {
-        return userSettingsRepository.findByUserId(userId)  // ✅ direct Long, fără findById
+        return userSettingsRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("User settings not found"));
     }
 
-    public UsersSettings patch(Long userId, Map<String, Object> updates) {
+    public UsersSettings patch(Long userId, UsersSettingsDTO updates) {
         UsersSettings settings = getByUserId(userId);
-        if (updates.containsKey("theme") && updates.get("theme") != null) {
-            settings.setTheme((String) updates.get("theme"));
+        if (updates.getTheme() != null) {
+            settings.setTheme(updates.getTheme());
         }
-        if (updates.containsKey("accent_color") && updates.get("accent_color") != null) {
-            settings.setTheme((String) updates.get("accent_color"));
+        if (updates.getAccent_color() != null) {
+            settings.setAccent_color(updates.getAccent_color());
         }
-        if (updates.containsKey("language") && updates.get("language") != null) {
-            settings.setTheme((String) updates.get("language"));
+        if (updates.getLanguage() != null) {
+            settings.setLanguage(updates.getLanguage());
         }
-        if (updates.containsKey("notifications_enabled") && updates.get("notifications_enabled") != null) {
-            settings.setTheme((String) updates.get("notifications_enabled"));
+        if (updates.getNotifications_enabled() != null) {
+            settings.setNotifications_enabled(updates.getNotifications_enabled());
         }
         return userSettingsRepository.save(settings);
     }

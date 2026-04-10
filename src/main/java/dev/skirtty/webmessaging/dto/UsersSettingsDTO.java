@@ -7,5 +7,5 @@ public class UsersSettingsDTO {
     private String theme;
     private String accent_color;
     private String language;
-    private boolean notifications_enabled;
+    private Boolean notifications_enabled;
 }
