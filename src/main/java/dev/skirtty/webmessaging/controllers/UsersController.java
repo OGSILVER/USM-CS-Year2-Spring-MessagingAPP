@@ -24,13 +24,12 @@ public class UsersController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(request));
     }
 
-
-    @PatchMapping("/update_username/{id}")
+    @PatchMapping("/update_username")
     public ResponseEntity<UsersDTO> updateName(@Valid @RequestBody UsersUpdateDTO user) {
         return ResponseEntity.ok(userService.updateUsername(user.getId(), user.getUsername()));
     }
 
-    @PatchMapping("/update_email/{id}")
+    @PatchMapping("/update_email")
     public ResponseEntity<UsersDTO> updateEmail(@Valid @RequestBody UsersUpdateDTO user) {
         return ResponseEntity.ok(userService.updateEmail(user.getId(),user.getEmail()));
     }

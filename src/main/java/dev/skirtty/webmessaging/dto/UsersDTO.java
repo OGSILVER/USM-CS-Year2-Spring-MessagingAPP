@@ -8,35 +8,28 @@ import java.time.LocalDateTime;
 
 
 @Data
-@Getter @Setter
 @NoArgsConstructor
 public class UsersDTO {
-    @NotNull
+    @NotNull(message = "Nu poti pune id ul null!")
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Nu poti pune numele null!")
     private String username;
 
-    @NotNull
+    @NotNull(message = "Nu poti pune email ul null!")
     private String email;
 
-
     private boolean isOnline;
-
-
     private LocalDateTime last_seen;
-
-
     private LocalDateTime created_at;
 
-
     public UsersDTO(Users user){
-        Long id = user.getId();
-        String username = user.getUsername();
-        String email = user.getEmail();
-        boolean isOnline = user.isOnline();
-        LocalDateTime last_seen = user.getLast_seen();
-        LocalDateTime created_at = user.getCreated_at();
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.isOnline = user.isOnline();
+        this.last_seen = user.getLast_seen();
+        this.created_at = user.getCreated_at();
     }
 
 

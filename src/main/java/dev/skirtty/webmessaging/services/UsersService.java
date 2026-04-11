@@ -50,8 +50,11 @@ public class UsersService {
         Users user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         boolean bool = existsByUsername(username);
-
+        if(bool){
+            throw new ResourceExistsException("A user with this name already exists!");
+        }
         user.setUsername(username);
+        userRepository.save(user);
         return new UsersDTO(user);
 
     }
@@ -62,7 +65,7 @@ public class UsersService {
         boolean bool = existsByEmail(email);
 
         if(bool){
-            throw new ResourceExistsException("A user wu=ith this email already exists!");
+            throw new ResourceExistsException("A user with this email already exists!");
         }
 
         user.setEmail(email);

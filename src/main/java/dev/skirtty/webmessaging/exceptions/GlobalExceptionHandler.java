@@ -20,25 +20,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleNotValid (MethodArgumentNotValidException exc) {
         String errors = exc.getBindingResult().getFieldErrors().toString();
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, errors);
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(400, errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
     }
 
     @ExceptionHandler(ResourceExistsException.class)
     public ResponseEntity<ErrorResponseDTO> handleAlreadyExists (ResourceExistsException exc) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, exc.getMessage());
-        return ResponseEntity.status(HttpStatus.IM_USED).body(errorResponseDTO);
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(409, exc.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponseDTO);
     }
 
     @ExceptionHandler(ResourceIsNullException.class)
     public ResponseEntity<ErrorResponseDTO> handleIsNull (ResourceIsNullException exc) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, exc.getMessage());
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(errorResponseDTO);
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(400, exc.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidReq (HttpMessageNotReadableException exc) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, "Structura invalida la request sau date invalide!");
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(400, "Structura invalida la request sau date invalide!");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
 
     }

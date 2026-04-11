@@ -11,4 +11,9 @@ public class UsersUpdateDTO {
     private Long id;
     private String username;
     private String email;
+
+    public UsersUpdateDTO(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 }
