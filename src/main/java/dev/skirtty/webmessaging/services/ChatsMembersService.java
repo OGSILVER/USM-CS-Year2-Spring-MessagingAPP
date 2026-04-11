@@ -1,6 +1,9 @@
 package dev.skirtty.webmessaging.services;
 
 import dev.skirtty.webmessaging.dto.UsersDTO;
+import dev.skirtty.webmessaging.exceptions.ResourceExistsException;
+import dev.skirtty.webmessaging.exceptions.ResourceIsNullException;
+import dev.skirtty.webmessaging.exceptions.ResourceNotFoundException;
 import dev.skirtty.webmessaging.models.Chats;
 import dev.skirtty.webmessaging.models.ChatsMembers;
 import dev.skirtty.webmessaging.models.Users;
@@ -21,6 +24,9 @@ public class ChatsMembersService {
     private final UsersRepository userRepository;
 
     public List<UsersDTO> getMembersByChatId(Long chatId) {
+        if (chatId == null) {
+            throw new ResourceIsNullException("Parametrul chatId este gol");
+        }
         return chatMembersRepository.findByChat_Id(chatId).stream()
                 .map(member -> {
                     Users user = member.getUser();
@@ -34,10 +40,21 @@ public class ChatsMembersService {
     }
 
     public void addMember(Long chatId, Long userId) {
+        if (chatId == null) {
+            throw new ResourceIsNullException("Parametrul chatId este gol");
+        }
+
+        if (userId == null) {
+            throw new ResourceIsNullException("Parametrul userId este gol");
+        }
+
+        if (chatMembersRepository.existsByChat_IdAndUser_Id(chatId, userId)) {
+            throw new ResourceExistsException("Utilizatorul " + userId + " este deja membru al chat-ului " + chatId);
+        }
         Chats chat = chatsRepository.findById(chatId)
-                .orElseThrow(() -> new RuntimeException("Chat not found: " + chatId));
+                .orElseThrow(() -> new ResourceNotFoundException("Chat-ul nu a fost gasit: " + chatId));
         Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("Utilizatorul nu a fost gasit: " + userId));
 
         ChatsMembers member = new ChatsMembers();
         member.setChat(chat);
@@ -47,10 +64,24 @@ public class ChatsMembersService {
     }
 
     public void removeMember(Long chatId, Long userId) {
+        if (chatId == null) {
+            throw new ResourceIsNullException("Parametrul chatId este gol");
+        }
+
+        if (userId == null) {
+            throw new ResourceIsNullException("Parametrul userId este gol");
+        }
         chatMembersRepository.deleteByChat_IdAndUser_Id(chatId, userId);
     }
 
     public boolean isMember(Long chatId, Long userId) {
+        if (chatId == null) {
+            throw new ResourceIsNullException("Parametrul chatId este gol");
+        }
+
+        if (userId == null) {
+            throw new ResourceIsNullException("Parametrul userId este gol");
+        }
         return chatMembersRepository.existsByChat_IdAndUser_Id(chatId, userId);
     }
 }

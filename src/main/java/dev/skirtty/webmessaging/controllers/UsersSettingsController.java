@@ -4,6 +4,7 @@ package dev.skirtty.webmessaging.controllers;
 import dev.skirtty.webmessaging.dto.UsersSettingsDTO;
 import dev.skirtty.webmessaging.models.UsersSettings;
 import dev.skirtty.webmessaging.services.UsersSettingsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UsersSettingsController {
     }
 
     @PatchMapping("/{userId}")
-    public ResponseEntity<UsersSettings> patchSettings(@PathVariable Long userId, @RequestBody UsersSettingsDTO updates) {
+    public ResponseEntity<UsersSettings> patchSettings(@Valid @PathVariable Long userId, @RequestBody UsersSettingsDTO updates) {
         return ResponseEntity.ok(usersSettingsService.patch(userId, updates));
     }
 
