@@ -28,4 +28,10 @@ public class GlobalExceptionHandler {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, exc.getMessage());
         return ResponseEntity.status(HttpStatus.IM_USED).body(errorResponseDTO);
     }
+
+    @ExceptionHandler(ResourceIsNullException.class)
+    public ResponseEntity<ErrorResponseDTO> handleIsNull (ResourceIsNullException exc) {
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, exc.getMessage());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(errorResponseDTO);
+    }
 }
