@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ChatsController {
 
-    public ChatsService chatsService;
+    final ChatsService chatsService;
 
-    @PostMapping("/create/")
+    @PostMapping("/create")
     public ResponseEntity<ChatsDTO> createChat (@Valid @RequestBody ChatsDTO chatsDTO) {
         boolean bool = chatsService.checkIfConversationExists(chatsDTO);
 
@@ -36,7 +36,7 @@ public class ChatsController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(chatsService.deleteConversation(id));
     }
 
-    @GetMapping("/messages/")
+    @GetMapping("/messages")
     public ResponseEntity<Page<MessageDTO>> getChatMessages (@Valid @RequestBody MessageRequestDTO messageRequestDTO) {
         return ResponseEntity.status(HttpStatus.FOUND).body(chatsService.getChatMessages(messageRequestDTO));
     }

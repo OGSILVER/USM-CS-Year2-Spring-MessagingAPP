@@ -3,6 +3,7 @@ package dev.skirtty.webmessaging.exceptions;
 import dev.skirtty.webmessaging.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,5 +34,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleIsNull (ResourceIsNullException exc) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, exc.getMessage());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(errorResponseDTO);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidReq (HttpMessageNotReadableException exc) {
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(404, "Structura invalida la request sau date invalide!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponseDTO);
+
     }
 }

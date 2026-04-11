@@ -37,9 +37,9 @@ public class ChatsService {
         chats.setType(chats.getType());
 
         firstChatMember.setChat(chats);
-        firstChatMember.setUser(usersRepository.findById(chatsDTO.getFirstUserId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!")));
+        firstChatMember.setUser(usersRepository.findById(chatsDTO.getFirstUserId()).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id!")));
         secondChatMember.setChat(chats);
-        secondChatMember.setUser(usersRepository.findById(chatsDTO.getSecondUserId()).orElseThrow(() -> new RuntimeException("Nu exista asa id!")));
+        secondChatMember.setUser(usersRepository.findById(chatsDTO.getSecondUserId()).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id!")));
 
         chatsRepository.save(chats);
         chatsMembersRepository.save(firstChatMember);

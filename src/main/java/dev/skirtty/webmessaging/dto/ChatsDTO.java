@@ -18,6 +18,9 @@ public class ChatsDTO {
     @NotBlank(message = "Nu ai pus o poza!")
     private String picture;
 
+    @NotNull(message = "Trebuie sa pui un id la primul membru!")
     private Long firstUserId;
+
+    @NotNull(message = "Trebuie sa pui un id la al doilea membru!")
     private Long secondUserId;
 }

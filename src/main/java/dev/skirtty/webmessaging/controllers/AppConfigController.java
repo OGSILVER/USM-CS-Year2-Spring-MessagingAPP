@@ -16,12 +16,12 @@ public class AppConfigController {
 
     final private AppConfigService appConfigService;
 
-    @PatchMapping("/update/{id}/")
+    @PatchMapping("/update/{id}")
     public AppConfig updateConfig (@PathVariable Long id, @RequestParam String appName, @RequestParam String version, @RequestParam String description) {
         return appConfigService.updateAppConfigById(id, appName, version, description);
     }
 
-    @PostMapping("/create/")
+    @PostMapping("/create")
     public ResponseEntity<AppConfigDTO> createConfig (@Valid @RequestBody AppConfigDTO appConfigDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(appConfigService.addAppConfig(appConfigDTO));
     }
