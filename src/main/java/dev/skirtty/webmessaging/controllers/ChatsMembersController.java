@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/chat-members")
+@RequestMapping("/api/chat_members")
 @RequiredArgsConstructor
 public class ChatsMembersController {
 

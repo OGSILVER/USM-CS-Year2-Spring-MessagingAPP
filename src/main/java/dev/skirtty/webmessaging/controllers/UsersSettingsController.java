@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/user-settings")
+@RequestMapping("/api/user_settings")
 @RequiredArgsConstructor
 public class UsersSettingsController {
 

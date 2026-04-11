@@ -27,6 +27,8 @@ public class ChatsMembersService {
         if (chatId == null) {
             throw new ResourceIsNullException("Parametrul chatId este gol");
         }
+
+        if (chatMembersRepository.findByChat_Id(chatId).isEmpty()) throw new ResourceNotFoundException("Nu exista asa chat id cu membrii!");
         return chatMembersRepository.findByChat_Id(chatId).stream()
                 .map(member -> {
                     Users user = member.getUser();

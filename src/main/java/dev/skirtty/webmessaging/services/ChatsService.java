@@ -37,9 +37,9 @@ public class ChatsService {
         chats.setType(chats.getType());
 
         firstChatMember.setChat(chats);
-        firstChatMember.setUser(usersRepository.findById(chatsDTO.getFirstUserId()).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id!")));
+        firstChatMember.setUser(usersRepository.findById(chatsDTO.getFirstUserId()).orElseThrow(() -> new ResourceNotFoundException("Primul membru cu asa id nu exista!")));
         secondChatMember.setChat(chats);
-        secondChatMember.setUser(usersRepository.findById(chatsDTO.getSecondUserId()).orElseThrow(() -> new ResourceNotFoundException("Nu exista asa id!")));
+        secondChatMember.setUser(usersRepository.findById(chatsDTO.getSecondUserId()).orElseThrow(() -> new ResourceNotFoundException("Al doilea membru cu asa id nu exista!")));
 
         chatsRepository.save(chats);
         chatsMembersRepository.save(firstChatMember);
