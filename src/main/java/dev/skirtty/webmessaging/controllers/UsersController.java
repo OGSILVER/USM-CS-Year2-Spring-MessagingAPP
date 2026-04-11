@@ -19,24 +19,27 @@ public class UsersController {
 
     private final UsersService userService;
 
-    @PostMapping("/register-user")
+    @PostMapping("/register_user")
     public ResponseEntity<UsersDTO> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(request));
     }
 
-    // this is wrong @reminder to make a request dto for updating user fields and add logic for password modify
-    // uncomplete, just for showcase
-    @PatchMapping("/update-username/{id}")
-    public ResponseEntity<UsersDTO> update(@Valid @RequestBody UsersUpdateDTO user, @PathVariable Long id) {
-        return ResponseEntity.ok(userService.updateUsername(id, user.getUsername()));
+
+    @PatchMapping("/update_username/{id}")
+    public ResponseEntity<UsersDTO> updateName(@Valid @RequestBody UsersUpdateDTO user) {
+        return ResponseEntity.ok(userService.updateUsername(user.getId(), user.getUsername()));
     }
 
-    @PatchMapping("/update-email/{id}")
+    @PatchMapping("/update_email/{id}")
+    public ResponseEntity<UsersDTO> updateEmail(@Valid @RequestBody UsersUpdateDTO user) {
+        return ResponseEntity.ok(userService.updateEmail(user.getId(),user.getEmail()));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UsersDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
+
 
 
 }
